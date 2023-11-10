@@ -1,0 +1,30 @@
+name: Release container
+on:
+    pull_request:
+        types:
+            - closed
+        branches:
+            - release
+
+jobs:
+    if_merged:
+        if: github.event.pull_request.merged == true
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+            - name: Login to Docker Hub
+              uses: docker/login-action@v2
+              with:
+                  username: ${{ secrets.DOCKERHUB_USERNAME }}
+                  password: ${{ secrets.DOCKERHUB_TOKEN }}
+            - name: Build Docker image
+              run: docker build -t educa_utf_olc .
+            - name: Add tags to image
+              run: |
+                  docker tag educa_utf_olc zrafaf/educa_utf_olc:${{ github.event.pull_request.title }}
+                  docker tag educa_utf_olc zrafaf/educa_utf_olc
+            - name: Push Docker image
+              run: |
+                  docker push zrafaf/educa_utf_olc:${{ github.event.pull_request.title }}
+                  docker push zrafaf/educa_utf_olc

@@ -1,0 +1,14 @@
+Dockerfile
+.dockerignore
+README.md
+.next
+.git
+.env
+.prettierignore
+docs
+documentacao
+.vscode
+.github
+venv
+.docker-compose.yml
+mkdocs.yml

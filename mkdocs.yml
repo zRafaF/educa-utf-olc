@@ -1,0 +1,113 @@
+site_name: EducaUTF OLC
+# site_dir: documentacao
+
+repo_url: https://github.com/ZRafaF/educa-utf-olc
+repo_name: ZRafaF/educa-utf-olc
+copyright: Copyright &copy; 2023 Rafael F. M. & Reinaldo
+edit_uri: edit/main/docs/
+
+theme:
+    name: material
+    palette:
+        # Palette toggle for light mode
+        - scheme: default
+          primary: deep orange
+          accent: orange
+          toggle:
+              icon: material/brightness-7
+              name: Mudar para o modo escuro
+
+        # Palette toggle for dark mode
+        - scheme: slate
+          primary: deep orange
+          accent: orange
+          toggle:
+              icon: material/brightness-4
+              name: Mudar para o modo claro
+
+    language: pt-BR # lingua do mkdocs-material
+
+    features:
+        - navigation.sections
+        - navigation.tabs
+        - navigation.top
+        - navigation.tracking
+        - navigation.path
+        - navigation.indexes
+        - navigation.footer
+        - search.highlight
+        - search.share
+        - search.suggest
+        - toc.follow
+        - content.code.copy
+        - content.code.annotate
+        - content.action.edit
+        - content.action.view
+
+        # - content.tabs.link           # Para criar Tabs de código
+    icon:
+        admonition:
+            admonition-windows: simple/windows
+            admonition-linux: simple/linux
+            admonition-raspi: simple/raspberrypi
+            admonition-pc: fontawesome/solid/computer
+            return: material/keyboard-return
+
+#docs_dir: 'docsSrc'
+#site_dir: 'docs'
+
+extra_css:
+    - stylesheets/extra.css
+    - stylesheets/pygments.css
+
+plugins:
+    - search:
+          separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+    - with-pdf:
+          author: Rafael F. M. & Reinaldo
+          cover_subtitle: Documentação completa
+          copyright: Copyright &copy; 2023 Rafael F. M. & Reinaldo.
+          toc_title: Índice
+          enabled_if_env: ENABLE_PDF_EXPORT
+          toc_level: 2
+          custom_template_path: docs/templates
+
+          # two_columns_level: 3                # Exporta o PDF como duas colunas
+          #custom_template_path: docs/styles.scss
+          #render_js: true
+    - pdf-export:
+          enabled_if_env: ENABLE_PDF_EXPORT
+
+markdown_extensions:
+    - pymdownx.highlight:
+          anchor_linenums: true
+          use_pygments: true # Renderiza todos os códigos durante a build ao inves de no runtime
+          auto_title: true
+    - codehilite
+    #- pymdownx.tabbed:         # Para criar Tabs de código
+    #    alternate_style: true
+    - pymdownx.inlinehilite
+    - pymdownx.snippets
+    - admonition
+    - pymdownx.details
+    - pymdownx.superfences:
+          custom_fences:
+              - name: mermaid
+                class: mermaid
+                format: !!python/name:pymdownx.superfences.fence_code_format
+    - pymdownx.critic
+    - pymdownx.caret
+    - pymdownx.keys
+    - pymdownx.mark
+    - pymdownx.tilde
+    - attr_list
+    - toc:
+          permalink: true
+
+nav:
+    - Inicio:
+          - Inicio: index.md
+          - Setup: setup.md
+          - Casos de uso: casos-de-uso.md
+    - API:
+          - API: api/index.md

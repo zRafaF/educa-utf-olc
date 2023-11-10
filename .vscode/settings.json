@@ -1,0 +1,11 @@
+{
+	"cSpell.language": "en,pt-BR",
+	"licenser.author": "Rafael F.M. & Reinaldo",
+	"licenser.license": "MIT",
+	"licenser.projectName": "EducaUTF OLC",
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"prettier.tabWidth": 4,
+	"prettier.useTabs": true,
+	"prettier.singleQuote": true,
+	"cSpell.words": ["documentacao", "umami", "Umami"]
+}
