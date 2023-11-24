@@ -9,10 +9,20 @@ from . import types
 
 
 
-def get_record_list_from_response(response: httpx.Response) -> List[any]:
+def get_record_list_from_response(response: httpx.Response) -> List[Dict]:
     """
-    Parse the response from get_list_of_articles_records function and return a list of ArticlesResponse objects.
+    Retorna a lista de Artigos da resposta como uma Lista de dicionários.
+
+    Args:
+        response (httpx.Response): Resposta da requisição HTTP.
+
+    Returns:
+        List[Dict]: Lista de dicionários representando os Artigos.
     """
     data = response.json()
 
     return data.get("items", [])
+
+
+
+
