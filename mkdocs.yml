@@ -86,6 +86,7 @@ plugins:
                       group_by_category: true
                       show_category_heading: true
                       docstring_section_style: spacy
+                      show_source: false
 
 markdown_extensions:
     - pymdownx.highlight:
@@ -116,9 +117,12 @@ markdown_extensions:
 nav:
     - Inicio:
           - Inicio: index.md
-          - Setup: setup.md
-          - Documentação: documentacao.md
           - Casos de uso: casos-de-uso.md
     - API:
           - API: api/index.md
-          - PocketBase_API: api/PocketBase_API.md
+          - pocketbase_api: api/pocketbase_api.md
+    - Desenvolvimento:
+          - Desenvolvimento: desenvolvimento/index.md
+          - Setup: desenvolvimento/setup.md
+          - Documentação: desenvolvimento/documentacao.md
+          - Testes: desenvolvimento/testes.md

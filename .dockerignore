@@ -13,3 +13,4 @@ venv
 .docker-compose.yml
 mkdocs.yml
 **/__pycache__/
+**.pytest_cache

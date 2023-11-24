@@ -7,6 +7,7 @@
 
 # Documentação
 
+A documentação desse projeto foi criada utilizando [MkDocs](https://www.mkdocs.org/) juntamente com [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) e alguns outros plugins.
 
 ## Auto documentação
 

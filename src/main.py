@@ -8,11 +8,15 @@ import asyncio
 PB_URL = "https://educautf.td.utfpr.edu.br/db/api"
 
 parser = ArgumentParser()
-parser.add_argument("--http", help="Specify a URL with the format 'host:port'\nExample: http://127.0.0.1:8090 or https://educautf.td.utfpr.edu.br/db")
+parser.add_argument(
+    "--http",
+    help="Specify a URL with the format 'host:port'\nExample: http://127.0.0.1:8090 or https://educautf.td.utfpr.edu.br/db",
+)
 args = parser.parse_args()
 
 if args.http:
     PB_URL = args.http
+
 
 async def main():
     # Inicializando a comunicação com o banco
@@ -21,6 +25,7 @@ async def main():
     article_list = pb_helpers.get_record_list_from_response(h)
     for i in article_list:
         print(i.get("title"))
+
 
 if __name__ == "__main__":
     asyncio.run(main())

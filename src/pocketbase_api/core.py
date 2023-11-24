@@ -1,9 +1,10 @@
 # Copyright (c) 2023 Rafael F.M. & Reinaldo
-# 
+#
 # This software is released under the MIT License.
 # https://opensource.org/licenses/MIT
 
 import httpx
+
 
 class PocketBase_API:
     """
@@ -13,6 +14,7 @@ class PocketBase_API:
 
     A lista de tipos e relações pode ser encontrada em <https://github.com/zRafaF/educa-utf/blob/main/app/types/pocketbase-types.ts>
     """
+
     def __init__(self, pb_url: str = "http://127.0.0.1:8090"):
         """
         Construtor da classe PocketBase_API.
@@ -23,33 +25,33 @@ class PocketBase_API:
 
         self.__pb_url = pb_url
         self.client = httpx.AsyncClient()
-    
-    def set_base_url(self, url:str):
+
+    def set_base_url(self, url: str):
         """
         Altera a URL base da API do PocketBase
-        
+
         Args:
             url (str): Nova URL base para a API do PocketBase.
         """
 
         self.__pb_url = url
 
-    def build_url(self, path: str)->str:
+    def build_url(self, path: str) -> str:
         """
         Função auxiliar para construir a URL completa para a API do PocketBase.
 
         Concatena o `path` ao url base da API do PocketBase.
-        
+
         Args:
             path str: Caminho novo.
-        
+
         Returns:
             srt: url construída.
 
         """
-        return f'{self.__pb_url}/{path}'
+        return f"{self.__pb_url}{path}"
 
-    async def health(self)->httpx.Response:
+    async def health(self) -> httpx.Response:
         """
         Retorna o status de saúde da API do PocketBase
 
@@ -57,19 +59,21 @@ class PocketBase_API:
             httpx.Response: Resposta da requisição HTTP
 
         """
-        return await self.client.get(self.build_url("health"))
+        return await self.client.get(self.build_url("/health"))
 
-    async def get_list_of_articles_records(self, num_of_records: int = 10)->httpx.Response:
+    async def get_list_of_articles_records(
+        self, num_of_records: int = 10
+    ) -> httpx.Response:
         """
         Retorna uma lista de artigos do PocketBase
 
 
         Args:
             num_of_records (int, optional): Número de registros a serem retornados.
-        
+
         Returns:
             httpx.Response: Resposta da requisição HTTP
-        
+
         Exemplo:
             ```python
             import asyncio
@@ -85,11 +89,13 @@ class PocketBase_API:
                 article_list = pb_helpers.get_record_list_from_response(h)
                 for i in article_list:
                     print(i.get("title"))
-            
+
             if __name__ == "__main__":
                 asyncio.run(main())
             ```
         """
 
-        return await self.client.get(self.build_url("collections/articles/records"), params={'page': "1", 'perPage': num_of_records})
-
+        return await self.client.get(
+            self.build_url("/collections/articles/records"),
+            params={"page": "1", "perPage": num_of_records},
+        )
