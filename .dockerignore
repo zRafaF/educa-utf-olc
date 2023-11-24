@@ -12,3 +12,4 @@ documentacao
 venv
 .docker-compose.yml
 mkdocs.yml
+**/__pycache__/
