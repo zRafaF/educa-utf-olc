@@ -15,15 +15,17 @@ class PocketBase_API:
     A lista de tipos e relações pode ser encontrada em <https://github.com/zRafaF/educa-utf/blob/main/app/types/pocketbase-types.ts>
     """
 
-    def __init__(self, pb_url: str = "http://127.0.0.1:8090"):
+    def __init__(self, pb_url: str = "http://127.0.0.1:8090", timeout: float = 5.0):
         """
         Construtor da classe PocketBase_API.
 
         Args:
             pb_url (str, optional): URL base da API do PocketBase. Defaults to "http://127.0.0.1:8090".
+            timeout (float, optional): Tempo máximo de espera para uma resposta da API do PocketBase. Defaults to 5.0.
         """
 
         self.__pb_url = pb_url
+        self.__timeout = timeout
         self.client = httpx.AsyncClient()
 
     def set_base_url(self, url: str):
@@ -59,7 +61,10 @@ class PocketBase_API:
             httpx.Response: Resposta da requisição HTTP
 
         """
-        return await self.client.get(self.build_url("/health"))
+        try:
+            return await self.client.get(self.build_url("/health"), timeout=self.__timeout)
+        except httpx.ReadTimeout:
+            return httpx.Response(status_code=408)
 
     async def get_list_of_articles_records(
         self, num_of_records: int = 10
@@ -97,5 +102,6 @@ class PocketBase_API:
 
         return await self.client.get(
             self.build_url("/collections/articles/records"),
-            params={"page": "1", "perPage": num_of_records},
+            params={"page": "1", "perPage": num_of_records}, 
+            timeout=self.__timeout
         )
