@@ -10,7 +10,7 @@ on:
 permissions:
     contents: write
 jobs:
-    deploy:
+    doc-build:
         env:
             ENABLE_PDF_EXPORT: 1
         runs-on: ubuntu-latest

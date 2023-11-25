@@ -3,7 +3,6 @@
 # This software is released under the MIT License.
 # https://opensource.org/licenses/MIT
 
-from http.server import HTTPServer
 from src.pocketbase_api import PocketBase_API
 import pytest
 from pytest_httpserver import HTTPServer
