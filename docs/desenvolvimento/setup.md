@@ -35,7 +35,7 @@ Como ativar:
     venv/Scripts/activate
     ```
 
-or
+ou
 
 !!! admonition-linux "Ativação no **Linux**"
 
