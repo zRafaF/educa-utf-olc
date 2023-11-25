@@ -18,6 +18,7 @@ def get_record_list_from_response(response: httpx.Response) -> List[Dict]:
     Returns:
         List[Dict]: Lista de dicionários representando os Artigos.
     """
-    data = response.json()
-
-    return data.get("items", [])
+    if response.status_code == 200:
+        data = response.json()
+        return data.get("items", [])
+    return []
