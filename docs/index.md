@@ -22,10 +22,14 @@ A documentação deste microsserviço está organizada em diferentes tópicos, s
 * **PDF**: Faça o download [aqui](https://github.com/ZrafaF/educa-utf-olc/blob/gh-pages/pdf/document.pdf).
 
 
-Se você está interessado em contribuir, um excelente ponto de partida é o tópico [Desenvolvimento](./desenvolvimento/index.md)
+Se você está interessado em contribuir, um excelente ponto de partida é o tópico [Desenvolvimento](https://zrafaf.github.io/educa-utf-olc/desenvolvimento/)
 
 ## Deploy
 
 A implantação desta aplicação é realizada por meio de Docker Containers. Todo o repositório de imagens está disponível em [zrafaf/educa_utf_olc](https://hub.docker.com/r/zrafaf/educa_utf_olc).
 
 O processo de *deploy* é executado através de um ***pull request*** na *branch* `release`. Isso inicia uma automática build e release usando o [GitHub Actions](https://github.com/features/actions). Estamos sempre buscando aprimorar e facilitar o processo de implantação.
+
+## Executando / contribuindo
+
+Para informações sobre como executar ou contribuir para a aplicação visite <https://zrafaf.github.io/educa-utf-olc/desenvolvimento/>.
