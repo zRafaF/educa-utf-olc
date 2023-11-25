@@ -10,7 +10,7 @@ parser = ArgumentParser()
 parser.add_argument(
     "--pb_url",
     default="https://educautf.td.utfpr.edu.br/db/api",
-    help="Specify a URL with the format 'host:port'\nExample: http://127.0.0.1:8090 or https://educautf.td.utfpr.edu.br/db",
+    help="Specify a URL with the format 'host:port'\nExample: http://127.0.0.1:8090 or https://educautf.td.utfpr.edu.br/db/api",
 )
 parser.add_argument(
     "--host", default="127.0.0.1", help="Specify the host to run FastAPI app"
