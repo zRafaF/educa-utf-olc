@@ -10,7 +10,7 @@ parser = ArgumentParser()
 parser.add_argument(
     "--pb_url",
     default="https://educautf.td.utfpr.edu.br/db/api",
-    help="Specify a URL with the format 'host:port'\nExample: http://127.0.0.1:8090 or https://educautf.td.utfpr.edu.br/db",
+    help="Specify a URL with the format 'host:port'\nExample: http://127.0.0.1:8090 or https://educautf.td.utfpr.edu.br/db/api",
 )
 parser.add_argument(
     "--host", default="127.0.0.1", help="Specify the host to run FastAPI app"
@@ -25,9 +25,10 @@ async def main():
     # Inicializando a comunicação com o banco
     pb_api.set_base_url(args.pb_url)
     h = await pb_api.get_list_of_articles_records(5)
-    article_list = pb_helpers.get_record_list_from_response(h)
-    for i in article_list:
-        print(i.get("title"))
+    if(h.status_code == 200):
+        article_list = pb_helpers.get_record_list_from_response(h)
+        for i in article_list:
+            print(i.get("title"))
 
     server = Server(
         config=uvicorn.Config(
