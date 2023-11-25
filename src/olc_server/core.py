@@ -6,6 +6,7 @@
 # Create FastAPI app
 from fastapi import FastAPI
 from .scheduler import app_rocketry
+from pocketbase_api import pb_api
 
 app_fastapi = FastAPI()
 
@@ -21,5 +22,10 @@ async def get_tasks():
 
 
 @app_fastapi.get("/")
-def read_root():
-    return {"message": "Hello EducaUTF-OLC!"}
+async def read_root():
+    pb_health = await pb_api.health()
+    return {"message": "Hello EducaUTF-OLC!", "pb_health": {
+        "code": pb_health.status_code,
+        # only return message if status_code is 200
+        "message": pb_health.json()["message"] if pb_health.status_code == 200 else "unable to contact PB API"
+    }}
