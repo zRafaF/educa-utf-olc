@@ -8,11 +8,6 @@
 	"prettier.useTabs": true,
 	"prettier.singleQuote": true,
 	"cSpell.words": [
-		"documentacao",
-		"httpx",
-		"pocketbase",
-		"umami",
-		"Umami",
-		"uvicorn"
+		"fastapi"
 	]
 }

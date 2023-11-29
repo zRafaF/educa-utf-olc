@@ -3,7 +3,7 @@ from pocketbase_api import pb_api
 from pocketbase_api import helpers as pb_helpers
 import asyncio
 import uvicorn
-from olc_server import scheduler, core, Server
+from olc_server import scheduler, api, Server
 
 
 parser = ArgumentParser()
@@ -32,13 +32,13 @@ async def main():
 
     server = Server(
         config=uvicorn.Config(
-            core.app_fastapi, workers=1, loop="asyncio", host=args.host, port=args.port
+            api.app_fastapi, workers=1, loop="asyncio", host=args.host, port=args.port
         )
     )
-    api = asyncio.create_task(server.serve())
+    api_server = asyncio.create_task(server.serve())
     sched = asyncio.create_task(scheduler.app_rocketry.serve())
 
-    await asyncio.wait([sched, api])
+    await asyncio.wait([sched, api_server])
 
 
 if __name__ == "__main__":
