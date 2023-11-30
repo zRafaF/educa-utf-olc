@@ -10,7 +10,7 @@ from .algorithms_olc import alg_olc
 app_rocketry = Rocketry()
 
 
-@app_rocketry.task(every("30 seconds"))
+@app_rocketry.task(every("240 seconds"))
 def check_schedule_health():
     """
     Tarefa para verificar a saúde do scheduler
