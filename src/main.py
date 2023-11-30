@@ -4,6 +4,7 @@ from pocketbase_api import helpers as pb_helpers
 import asyncio
 import uvicorn
 from olc_server import scheduler, api, Server
+import httpx
 
 
 parser = ArgumentParser()
@@ -24,8 +25,11 @@ args = parser.parse_args()
 async def main():
     # Inicializando a comunicação com o banco
     pb_api.set_base_url(args.pb_url)
-    h = await pb_api.get_list_of_articles_records(5)
-    if(h.status_code == 200):
+    h = await pb_api.get_list_of_articles_stats_records_by_age(0, 60)
+    # check if h is a httpx.HTTPError or a httpx.Response
+
+    if(isinstance(h, httpx.Response)):
+        print(h.json())
         article_list = pb_helpers.get_record_list_from_response(h)
         for i in article_list:
             print(i.get("title"))

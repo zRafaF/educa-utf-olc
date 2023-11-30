@@ -4,7 +4,7 @@
 # https://opensource.org/licenses/MIT
 
 import httpx
-
+from . import helpers as pb_helpers
 
 class PocketBase_API:
     """
@@ -53,7 +53,7 @@ class PocketBase_API:
         """
         return f"{self.__pb_url}{path}"
 
-    async def health(self) -> httpx.Response:
+    async def health(self) -> httpx.Response | httpx.HTTPError:
         """
         Retorna o status de saúde da API do PocketBase
 
@@ -62,13 +62,16 @@ class PocketBase_API:
 
         """
         try:
-            return await self.client.get(self.build_url("/health"), timeout=self.__timeout)
-        except httpx.ReadTimeout:
-            return httpx.Response(status_code=408)
+            response = await self.client.get(self.build_url("/health"), timeout=self.__timeout)
+            response.raise_for_status()
+            return response
+        except httpx.HTTPError as exc:
+            print(f"HTTP Exception for {exc.request.url} - {exc}")
+            return exc
 
-    async def get_list_of_articles_records(
-        self, num_of_records: int = 10
-    ) -> httpx.Response:
+    async def get_list_of_articles_stats_records(
+        self, num_of_records: int = 10, filter: str = "", sort: str = ""
+    ) -> httpx.Response | httpx.HTTPError:
         """
         Retorna uma lista de artigos do PocketBase
 
@@ -100,8 +103,43 @@ class PocketBase_API:
             ```
         """
 
-        return await self.client.get(
-            self.build_url("/collections/articles/records"),
-            params={"page": "1", "perPage": num_of_records}, 
-            timeout=self.__timeout
-        )
+        try:
+            response = await self.client.get(
+                self.build_url("/collections/articles/records"),
+                params={"page": "1", "perPage": num_of_records}, 
+                timeout=self.__timeout
+            )
+            
+            response.raise_for_status()
+            return response
+        except httpx.HTTPError as exc:
+            print(f"HTTP Exception for {exc.request.url} - {exc}")
+            return exc
+
+    
+    async def get_list_of_articles_stats_records_by_age(self, num_of_records: int = 10, age_in_days: int = 7) -> httpx.Response | httpx.HTTPError:
+        """
+        Retorna uma lista de artigos do PocketBase com idade menor ou igual a `age_in_days` dias. Ordenado por `created` em ordem decrescente.
+
+        args:
+            num_of_records (int, optional): Número de registros a serem retornados.
+            age_in_days (int, optional): Idade máxima dos registros em dias.
+        
+        Returns:
+            httpx.Response: Resposta da requisição HTTP
+        """
+
+        filter_date = pb_helpers.calculate_date_since_today(number_of_days=age_in_days)
+
+        try:
+            response = await self.client.get(
+                self.build_url("/collections/articles_stats/records"),
+                params={"page": "1", "perPage": num_of_records, "filter": f"created>=\"{filter_date}\""},
+                timeout=self.__timeout
+            )
+            
+            response.raise_for_status()
+            return response
+        except httpx.HTTPError as exc:
+            print(f"HTTP Exception for {exc.request.url} - {exc}")
+            return exc
