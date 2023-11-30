@@ -4,7 +4,7 @@
 # https://opensource.org/licenses/MIT
 
 # Create FastAPI app
-from fastapi import FastAPI, responses
+from fastapi import FastAPI, responses, Request
 import httpx
 from .scheduler import app_rocketry
 from . import algorithms_olc
@@ -24,10 +24,11 @@ async def get_tasks():
 
 
 @app_fastapi.get("/")
-async def read_root():
+async def read_root(request: Request):
     """
     Endpoint de saúde da API
     """
+
     response = await pb_api.health()
     if isinstance(response, httpx.Response):
         return {
@@ -36,6 +37,7 @@ async def read_root():
                 "code": response.status_code,
                 "message": response.json()["message"],
             },
+            "root_path": request.scope.get("root_path"),
         }
     return {
         "message": "Hello EducaUTF-OLC!",
@@ -43,10 +45,11 @@ async def read_root():
             "code": "502",
             "message": "unable to contact PB API",
         },
+        "root_path": request.scope.get("root_path"),
     }
 
 
-@app_fastapi.get("/trending_articles")
+@app_fastapi.get("/trending-articles")
 def get_trending_articles():
     """
     Endpoint para obter os artigos em alta

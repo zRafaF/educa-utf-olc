@@ -22,7 +22,7 @@ def alg_olc():
 
 
 def test_trending_articles(fastapi_client):
-    response = fastapi_client.get("/trending_articles")
+    response = fastapi_client.get("/trending-articles")
     assert response.status_code == 200
     assert response.json() == {
         "page": 1,

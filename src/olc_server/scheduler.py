@@ -11,9 +11,9 @@ app_rocketry = Rocketry()
 
 
 @app_rocketry.task(every("30 seconds"))
-def do_things():
+def check_schedule_health():
     """
-    Tarefa de teste
+    Tarefa para verificar a saúde do scheduler
     """
     print("Scheduler health check")
 
