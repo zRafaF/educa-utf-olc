@@ -35,17 +35,14 @@ class AlgorithmsOLC:
             # calculates the number of days since created counting from today
             age = (datetime.today() - converted_time).days
 
-            print(f'age: {age} latest_views: {latest_views} likes: {likes}')
-
             # float division
             score = (float(latest_views)/float(age))+0.4*likes
             scores.append((score, i))
 
 
-        print(f'unsorted scores: {[score for score, _ in scores]}')  # Print only the scores
-
         #sort values by the score
         sorted_values_by_score = sorted(scores, key=lambda tup: tup[0], reverse=True)
+        
         print(f'sorted scores: {[score for score, _ in sorted_values_by_score]}')  # Print only the scores
         
         self.__trending_articles = [item[1] for item in sorted_values_by_score[:50]]
