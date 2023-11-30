@@ -5,6 +5,7 @@
 
 # Create FastAPI app
 from fastapi import FastAPI, responses
+import httpx
 from .scheduler import app_rocketry
 from . import algorithms_olc
 from pocketbase_api.core import pb_api
@@ -27,15 +28,20 @@ async def read_root():
     """
     Endpoint de saúde da API
     """
-    pb_health = await pb_api.health()
+    response = await pb_api.health()
+    if isinstance(response, httpx.Response):
+        return {
+            "message": "Hello EducaUTF-OLC!",
+            "pb_health": {
+                "code": response.status_code,
+                "message": response.json()["message"],
+            },
+        }
     return {
         "message": "Hello EducaUTF-OLC!",
         "pb_health": {
-            "code": pb_health.status_code,
-            # only return message if status_code is 200
-            "message": pb_health.json()["message"]
-            if pb_health.status_code == 200
-            else "unable to contact PB API",
+            "code": "502",
+            "message": "unable to contact PB API",
         },
     }
 
