@@ -8,6 +8,7 @@ import pytest
 from pytest_httpserver import HTTPServer
 import time
 
+
 @pytest.fixture
 def pb_api(httpserver: HTTPServer):
     return PocketBase_API(httpserver.url_for(""), 0.3)

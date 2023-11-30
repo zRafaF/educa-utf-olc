@@ -25,20 +25,13 @@ args = parser.parse_args()
 async def main():
     # Inicializando a comunicação com o banco
     pb_api.set_base_url(args.pb_url)
-    h = await pb_api.get_list_of_articles_stats_records_by_age(0, 60)
-    # check if h is a httpx.HTTPError or a httpx.Response
-
-    if(isinstance(h, httpx.Response)):
-        print(h.json())
-        article_list = pb_helpers.get_record_list_from_response(h)
-        for i in article_list:
-            print(i.get("title"))
 
     server = Server(
         config=uvicorn.Config(
             api.app_fastapi, workers=1, loop="asyncio", host=args.host, port=args.port
         )
     )
+
     api_server = asyncio.create_task(server.serve())
     sched = asyncio.create_task(scheduler.app_rocketry.serve())
 
