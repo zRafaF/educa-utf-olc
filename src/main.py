@@ -19,6 +19,11 @@ parser.add_argument(
 parser.add_argument(
     "--port", type=int, default=8000, help="Specify the port to run FastAPI app"
 )
+parser.add_argument(
+    "--root_path",
+    default="/olc-api",
+    help="Specify the root path to run FastAPI app",
+)
 args = parser.parse_args()
 
 
@@ -28,7 +33,12 @@ async def main():
 
     server = olc_core.OLCServer(
         config=uvicorn.Config(
-            api.app_fastapi, workers=1, loop="asyncio", host=args.host, port=args.port
+            api.app_fastapi,
+            workers=1,
+            loop="asyncio",
+            host=args.host,
+            port=args.port,
+            root_path=args.root_path,
         )
     )
 
