@@ -6,6 +6,7 @@
 import httpx
 from . import helpers as pb_helpers
 
+
 class PocketBase_API:
     """
     Classe de abstração do Backend utilizando [PocketBase](https://pocketbase.io/docs/).
@@ -62,7 +63,9 @@ class PocketBase_API:
 
         """
         try:
-            response = await self.client.get(self.build_url("/health"), timeout=self.__timeout)
+            response = await self.client.get(
+                self.build_url("/health"), timeout=self.__timeout
+            )
             response.raise_for_status()
             return response
         except httpx.HTTPError as exc:
@@ -70,14 +73,17 @@ class PocketBase_API:
             return exc
 
     async def get_list_of_articles_stats_records(
-        self, num_of_records: int = 10, filter: str = "", sort: str = ""
+        self, page: int = 1, num_of_records: int = 10, filter: str = "", sort: str = ""
     ) -> httpx.Response | httpx.HTTPError:
         """
         Retorna uma lista de artigos do PocketBase
 
 
         Args:
-            num_of_records (int, optional): Número de registros a serem retornados.
+            page (int, optional): Página a ser retornada. Defaults to 1.
+            num_of_records (int, optional): Número de registros a serem retornados. Defaults to 10.
+            filter (str, optional): Filtro a ser aplicado. Defaults to "".
+            sort (str, optional): Ordenação a ser aplicada. Defaults to "".
 
         Returns:
             httpx.Response: Resposta da requisição HTTP
@@ -85,7 +91,7 @@ class PocketBase_API:
         Exemplo:
             ```python
             import asyncio
-            from pocketbase_api import pb_api
+            from pocketbase_api.core import pb_api
             from pocketbase_api import helpers as pb_helpers
 
             PB_URL = "https://educautf.td.utfpr.edu.br/db/api"
@@ -102,44 +108,49 @@ class PocketBase_API:
                 asyncio.run(main())
             ```
         """
+        params = {}
+
+        params["page"] = page
+        params["perPage"] = num_of_records
+        if filter != "":
+            params["filter"] = filter
+
+        if sort != "":
+            params["sort"] = sort
 
         try:
             response = await self.client.get(
-                self.build_url("/collections/articles/records"),
-                params={"page": "1", "perPage": num_of_records}, 
-                timeout=self.__timeout
+                self.build_url("/collections/articles_stats/records"),
+                params=params,
+                timeout=self.__timeout,
             )
-            
+
             response.raise_for_status()
             return response
         except httpx.HTTPError as exc:
             print(f"HTTP Exception for {exc.request.url} - {exc}")
             return exc
 
-    
-    async def get_list_of_articles_stats_records_by_age(self, num_of_records: int = 10, age_in_days: int = 7) -> httpx.Response | httpx.HTTPError:
+    async def get_list_of_articles_stats_records_by_age(
+        self, num_of_records: int = 10, age_in_days: int = 7
+    ) -> httpx.Response | httpx.HTTPError:
         """
         Retorna uma lista de artigos do PocketBase com idade menor ou igual a `age_in_days` dias. Ordenado por `created` em ordem decrescente.
 
         args:
             num_of_records (int, optional): Número de registros a serem retornados.
             age_in_days (int, optional): Idade máxima dos registros em dias.
-        
         Returns:
             httpx.Response: Resposta da requisição HTTP
         """
 
         filter_date = pb_helpers.calculate_date_since_today(number_of_days=age_in_days)
 
-        try:
-            response = await self.client.get(
-                self.build_url("/collections/articles_stats/records"),
-                params={"page": "1", "perPage": num_of_records, "filter": f"created>=\"{filter_date}\""},
-                timeout=self.__timeout
-            )
-            
-            response.raise_for_status()
-            return response
-        except httpx.HTTPError as exc:
-            print(f"HTTP Exception for {exc.request.url} - {exc}")
-            return exc
+        return await self.get_list_of_articles_stats_records(
+            num_of_records=num_of_records,
+            filter=f'created>="{filter_date}"',
+            sort="-created",
+        )
+
+
+pb_api = PocketBase_API()  # Objeto para manipulação da API

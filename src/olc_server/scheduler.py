@@ -17,10 +17,11 @@ def do_things():
     """
     print("Scheduler health check")
 
+
 @app_rocketry.task(every("6 hours"), execution="async")
 async def update_trending_articles():
     """
     Tarefa para atualizar os artigos em ascensão
     """
-    await alg_olc.calculate_score()
+    await alg_olc.update_trending_articles()
     print("Updating trending articles")
