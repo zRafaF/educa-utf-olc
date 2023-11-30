@@ -5,7 +5,6 @@
 
 from typing import List, Dict
 import httpx
-from . import types
 from datetime import datetime, timedelta
 
 """
@@ -33,7 +32,10 @@ Article_stats_dict
 
 """
 
-def get_record_list_from_response(response: httpx.Response | httpx.HTTPError) -> List[Dict]:
+
+def get_record_list_from_response(
+    response: httpx.Response | httpx.HTTPError,
+) -> List[Dict]:
     """
     Retorna a lista de Artigos da resposta como uma Lista de dicionários.
 
@@ -43,19 +45,22 @@ def get_record_list_from_response(response: httpx.Response | httpx.HTTPError) ->
     Returns:
         List[Dict]: Lista de dicionários representando os Artigos.
     """
-    if(isinstance(response, httpx.Response)):
+    if isinstance(response, httpx.Response):
         data = response.json()
         return data.get("items", [])
     return []
 
-def calculate_date_since_today(start_date: datetime = datetime.today(), number_of_days: int = 30)->str:
+
+def calculate_date_since_today(
+    start_date: datetime = datetime.today(), number_of_days: int = 30
+) -> str:
     """
     Calcula uma data no formato YYYY-MM-DD de acordo com o número de dias passados.
-    
+
     Args:
         start_date (datetime, optional): Data inicial. Defaults to datetime.today().
         number_of_days (int, optional): Número de dias a serem subtraídos. Defaults to 30.
-    
+
     Returns:
         str: Data no formato YYYY-MM-DD
     """

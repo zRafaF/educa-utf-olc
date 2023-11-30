@@ -7,8 +7,8 @@
 
 # olc_server
 
-::: src.olc_server
 
+::: src.olc_server.core
 
 ___
 
