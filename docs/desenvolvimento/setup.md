@@ -1,13 +1,14 @@
 # Setup
 
-Esta página definirá o passo a passo para configurar este projeto.
+Esta página fornece um guia detalhado para configurar este projeto. Certifique-se de seguir cada passo cuidadosamente.
 
+Para executar este projeto, você precisará de [Python](https://www.python.org/), **PIP** e **GIT**.
 
-Para executa-lo você precisará de [Python](https://www.python.org/), **PIP** e **GIT**.
-
-> Este projeto foi desenvolvido usando a versão Python `Python 3.11`.
+> Este projeto foi desenvolvido utilizando a versão `Python 3.11`.
 
 ## Clonar o repositório
+
+Abra o terminal e execute os seguintes comandos:
 
 ```bash
 git clone https://github.com/ZRafaF/educa-utf-olc
@@ -17,7 +18,9 @@ cd educa-utf-olc
 
 ## Criando um ambiente virtual
 
-> A etapa a seguir não é obrigatória, mas é **recomendada**. Se você quiser saber um pouco mais sobre ambientes virtuais de python visite [https://docs.python.org/3/library/venv.html](https://docs.python.org/3/library/venv.html)
+> A criação de um ambiente virtual não é obrigatória, mas é altamente **recomendada**. Para saber mais sobre ambientes virtuais em Python, visite [https://docs.python.org/3/library/venv.html](https://docs.python.org/3/library/venv.html).
+
+Execute os seguintes comandos para criar e ativar um ambiente virtual:
 
 ```bash
 python -m pip install --user virtualenv
@@ -25,9 +28,10 @@ python -m pip install --user virtualenv
 python -m venv venv
 ```
 
-Um diretório `venv` deve ser criado na pasta raiz do projeto.
+Um diretório ``venv`` será criado na pasta raiz do projeto.
 
-Como ativar:
+
+### Ativação do Ambiente Virtual
 
 !!! admonition-windows "Ativação no **Windows**"
 
@@ -45,40 +49,22 @@ ou
 
 ---
 
-Com isso o ambiente virtual estará ativado e qualquer biblioteca instalada será aplicada apenas à esse ambiente.
+Com o ambiente virtual ativado, qualquer biblioteca instalada será aplicada apenas a este ambiente.
 
 ## Instalando dependências
+
+Execute o seguinte comando para instalar todas as dependências listadas no arquivo `requirements.txt`.
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Esse comando irá instalar todas as dependências contidas no arquivo `requirements.txt`
+Agora seu ambiente está pronto para executar a aplicação.
 
+## Testes
 
-
+Para obter informações sobre os testes, consulte [Desenvolvimento-Testes](./testes.md)
 
 ## Documentação
-Para poder editar a documentação será preciso instalar suas **dependências** com:
 
-```bash
-pip install -r docs/requirements.txt
-```
-
-Após isso utilize o comando a seguir para servir a documentação no `localhost`:
-
-``` sh
-mkdocs serve
-```
-
-Ou o comando a seguir para criar uma build completa da documentação
-
-``` sh
-mkdocs build
-```
-
-!!! info
-    A documentação desse projeto também pode ser acessada em formato de `.pdf`, entretanto esse so será criado caso seja a variável de ambiente `ENABLE_PDF_EXPORT` seja igual a `1`.
-    ``` sh
-    ENABLE_PDF_EXPORT: 1
-    ```
+Para executar ou contribuir para a documentação, consulte [Desenvolvimento-Documentação](./documentacao.md)

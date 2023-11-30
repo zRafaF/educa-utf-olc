@@ -121,6 +121,7 @@ nav:
     - API:
           - API: api/index.md
           - pocketbase_api: api/pocketbase_api.md
+          - olc_server: api/olc_server.md
     - Desenvolvimento:
           - Desenvolvimento: desenvolvimento/index.md
           - Setup: desenvolvimento/setup.md

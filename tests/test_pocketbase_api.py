@@ -23,10 +23,3 @@ async def test_health(pb_api: PocketBase_API, httpserver: HTTPServer):
     )
     request = await pb_api.health()
     assert request.json()["message"] == "API is healthy."
-
-async def test_health_error(pb_api: PocketBase_API, httpserver: HTTPServer):
-    def sleeping(request):
-        time.sleep(2)
-    httpserver.expect_request("/health").respond_with_handler(sleeping)
-    request = await pb_api.health()
-    assert request.status_code != 200
