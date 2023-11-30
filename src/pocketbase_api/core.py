@@ -91,7 +91,7 @@ class PocketBase_API:
         Exemplo:
             ```python
             import asyncio
-            from pocketbase_api import pb_api
+            from pocketbase_api.core import pb_api
             from pocketbase_api import helpers as pb_helpers
 
             PB_URL = "https://educautf.td.utfpr.edu.br/db/api"
@@ -151,3 +151,6 @@ class PocketBase_API:
             filter=f'created>="{filter_date}"',
             sort="-created",
         )
+
+
+pb_api = PocketBase_API()  # Objeto para manipulação da API

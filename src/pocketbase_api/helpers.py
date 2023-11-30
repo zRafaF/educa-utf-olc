@@ -5,7 +5,6 @@
 
 from typing import List, Dict
 import httpx
-from . import types
 from datetime import datetime, timedelta
 
 """

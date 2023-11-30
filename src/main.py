@@ -1,9 +1,9 @@
 from argparse import ArgumentParser
-from pocketbase_api import pb_api
+from pocketbase_api.core import pb_api
 from pocketbase_api import helpers as pb_helpers
 import asyncio
 import uvicorn
-from olc_server import scheduler, api, Server
+from olc_server import scheduler, api, core as olc_core
 import httpx
 
 
@@ -26,7 +26,7 @@ async def main():
     # Inicializando a comunicação com o banco
     pb_api.set_base_url(args.pb_url)
 
-    server = Server(
+    server = olc_core.OLCServer(
         config=uvicorn.Config(
             api.app_fastapi, workers=1, loop="asyncio", host=args.host, port=args.port
         )

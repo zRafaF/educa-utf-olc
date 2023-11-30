@@ -6,8 +6,8 @@
 # Create FastAPI app
 from fastapi import FastAPI, responses
 from .scheduler import app_rocketry
-from pocketbase_api import pb_api
 from . import algorithms_olc
+from pocketbase_api.core import pb_api
 
 app_fastapi = FastAPI()
 

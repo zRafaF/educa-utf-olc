@@ -3,7 +3,7 @@
 # This software is released under the MIT License.
 # https://opensource.org/licenses/MIT
 
-from pocketbase_api import pb_api
+from pocketbase_api.core import pb_api
 from pocketbase_api import helpers as pb_helpers
 import httpx
 from datetime import datetime
@@ -50,15 +50,30 @@ class AlgorithmsOLC:
         )
         return fallback_articles_list
 
-    async def calculate_score(self):
+    async def update_trending_articles(self):
         """
-        Calcula o score de cada artigo e atualiza a lista de artigos em alta
+        Atualiza a lista de artigos em alta
         """
         min_article_age = 30
 
         articles_stats_list = await self.fetch_article_list(
             RESPONSE_SIZE, min_article_age
         )
+
+        self.calculate_score(articles_stats_list)
+
+    def calculate_score(
+        self,
+        articles_stats_list: httpx.Response | httpx.HTTPError,
+        date_for_calculation: datetime = datetime.today(),
+    ):
+        """
+        Calcula o score de cada artigo e atualiza a lista de artigos em alta, ordenando-os pelo score
+
+        Args:
+            articles_stats_list (httpx.Response | httpx.HTTPError): Lista de artigos
+            date_for_calculation (datetime, optional): Data para calcular o score. Defaults to datetime.today().
+        """
 
         articles_instances = pb_helpers.get_record_list_from_response(
             articles_stats_list
@@ -73,7 +88,7 @@ class AlgorithmsOLC:
             converted_time = datetime.strptime(created, "%Y-%m-%d %H:%M:%S.%fZ")
 
             # calculates the number of days since created counting from today
-            age = (datetime.today() - converted_time).days
+            age = (date_for_calculation - converted_time).days
 
             score = (float(latest_views) / float(age)) + 0.4 * likes
             scores.append((score, i))
@@ -86,6 +101,7 @@ class AlgorithmsOLC:
         )  # Print only the scores
 
         self.__trending_articles = [item[1] for item in sorted_values_by_score[:50]]
+        return self.__trending_articles
 
     def get_trending_articles(self):
         return self.__trending_articles
