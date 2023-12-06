@@ -4,6 +4,8 @@ O EducaUTF OLC é um microsserviço dedicado à classificação de dados e ciên
 
 Escrito em Python, este serviço aceita solicitações de acesso ao seu conteúdo por meio de uma REST API. Em sua fase inicial, o OLC concentra-se na avaliação de **artigos** e **capítulos** em ascensão.
 
+O *endpoint* dessa aplicação está disponível em <https://educautf.td.utfpr.edu.br/olc-api>
+
 ## O que é o EducaUTF?
 
 O [EducaUTF](https://educautf.td.utfpr.edu.br/) tem como missão simplificar a criação e acessibilidade de materiais pedagógicos. 
@@ -32,4 +34,20 @@ O processo de *deploy* é executado através de um ***pull request*** na *branch
 
 ## Executando / contribuindo
 
-Para informações sobre como executar ou contribuir para a aplicação visite <https://zrafaf.github.io/educa-utf-olc/desenvolvimento/>.
+### Executando manualmente
+
+```sh
+python src/main.py --host=0.0.0.0 --port=3000 --pb_url=https://educautf.td.utfpr.edu.br/db/api
+```
+
+### Executando através de container
+
+``` sh
+docker pull zrafaf/educa_utf_olc
+
+docker run -p 3005:3005 zrafaf/educa_utf_olc
+```
+
+
+### Mais informações
+Para mais informações sobre como executar ou contribuir para a aplicação visite <https://zrafaf.github.io/educa-utf-olc/desenvolvimento/>.
